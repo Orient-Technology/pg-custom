@@ -46,17 +46,17 @@ jobs:
           flavor: |
             latest=false
           tags: |
-            # Releases (v1.2.3): latest, pg18, pg18-1.2.3, pg18-1.2, pg18-1
+            # Releases (v1.2.3): latest, 18, 18-1.2.3, 18-1.2, 18-1
             type=raw,value=latest,enable=${{ startsWith(github.ref, 'refs/tags/v') }}
-            type=raw,value=pg${{ env.PG_MAJOR }},enable=${{ startsWith(github.ref, 'refs/tags/v') }}
-            type=semver,pattern={{version}},prefix=pg${{ env.PG_MAJOR }}-
-            type=semver,pattern={{major}}.{{minor}},prefix=pg${{ env.PG_MAJOR }}-
-            type=semver,pattern={{major}},prefix=pg${{ env.PG_MAJOR }}-,enable=${{ !startsWith(github.ref, 'refs/tags/v0.') }}
-            # master: edge, pg18-edge
+            type=raw,value=${{ env.PG_MAJOR }},enable=${{ startsWith(github.ref, 'refs/tags/v') }}
+            type=semver,pattern={{version}},prefix=${{ env.PG_MAJOR }}-
+            type=semver,pattern={{major}}.{{minor}},prefix=${{ env.PG_MAJOR }}-
+            type=semver,pattern={{major}},prefix=${{ env.PG_MAJOR }}-,enable=${{ !startsWith(github.ref, 'refs/tags/v0.') }}
+            # master: edge, 18-edge
             type=edge,branch=master
-            type=edge,branch=master,prefix=pg${{ env.PG_MAJOR }}-
-            # Every build: immutable pg18-sha-abc1234
-            type=sha,prefix=pg${{ env.PG_MAJOR }}-sha-
+            type=edge,branch=master,prefix=${{ env.PG_MAJOR }}-
+            # Every build: immutable 18-sha-abc1234
+            type=sha,prefix=${{ env.PG_MAJOR }}-sha-
             type=ref,event=pr
 
       - name: Build and push
